@@ -1,24 +1,21 @@
 #!/bin/bash
 
-# Shell script to clone stable pie HALS for lettuce
+# Shell script to clone stable eleven HALS for ginkgo
 # NOTE: Only for ROMs with project pathmap support.
 
-HALS_REPO="https://github.com/ghostrider-reborn/LOS-16-msm8916-hals"
+HALS_REPO='https://github.com/trinket-devs'
 
-for i in "audio" "media" "display"
+if [ -z "$B1" ]; then B1="ten"; fi
+if [ -z "$BRANCH2" ]; then BRANCH2="11.0"; fi
+
+for i in "audio" "media" 
 do
-    echo -e "\n====== CLONING MSM8916 $i HAL ======\n"
-    rm -rf hardware/qcom/$i-caf/msm8916
-    git clone -b $i-caf/msm8916 $HALS_REPO hardware/qcom/$i-caf/msm8916
+    echo -e "\n====== CLONING sm8150 $i HAL ======\n"
+    rm -rf hardware/qcom-caf/sm8150/$i
+    git clone -b $B1 $HALS_REPO/hardware_qcom-caf_sm8150_$i hardware/qcom-caf/sm8150/$i
 done
 
-for j in "keymaster" "wlan-caf" "bt-caf"
-do
-    echo -e "\n====== CLONING MSM8916 $j HAL ======\n"
-    rm -rf hardware/qcom/$j
-    git clone -b $j $HALS_REPO hardware/qcom/$j
-done
+echo -e "\n============== CLONING sm8150 display HAL ==============\n"
+rm -rf hardware/qcom-caf/sm8150/display
+git clone -b $BRANCH2 $HALS_REPO/hardware_qcom-caf_sm8150_display hardware/qcom-caf/sm8150/display
 
-echo -e "\n====== CLONING CAF RIL ======\n"
-rm -rf hardware/ril-caf
-git clone -b ril-caf $HALS_REPO hardware/ril-caf
